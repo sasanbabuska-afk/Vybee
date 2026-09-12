@@ -60,11 +60,11 @@ export const INITIAL_ACTIVITY_REACTIONS: ActivityReactionsData = {
   }
 };
 
-// Default city center (e.g. vibrant metro hub - Berlin / Metro Center coordinates default)
+// Default city center (e.g. vibrant metro hub - Tehran / Metro Center coordinates default)
 export const DEFAULT_USER_LOCATION = {
-  lat: 52.5200,
-  lng: 13.4050,
-  name: 'Berlin Mitte'
+  lat: 35.6892,
+  lng: 51.3890,
+  name: 'Tehran Valiasr'
 };
 
 export const INITIAL_USER: User = {
@@ -73,7 +73,7 @@ export const INITIAL_USER: User = {
   displayName: 'Sasan',
   profilePhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
   ageRange: '25-30',
-  city: 'Berlin',
+  city: 'Tehran',
   bio: 'Looking for friendly people to play FIFA, play casual turf football, hit the gym, and collaborate on tech projects.',
   interests: ['Gaming', 'Football', 'Gym', 'Programming', 'Chess'],
   createdActivitiesCount: 2,
@@ -89,7 +89,7 @@ export const INITIAL_USER: User = {
   approximateLocation: {
     lat: DEFAULT_USER_LOCATION.lat,
     lng: DEFAULT_USER_LOCATION.lng,
-    name: 'Berlin Central Hub'
+    name: 'Tehran Central Hub'
   },
   createdAt: '2026-06-15T10:00:00Z'
 };
@@ -102,7 +102,7 @@ export const PRESET_USERS: User[] = [
     displayName: 'Elena Rostova',
     profilePhoto: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
     ageRange: '22-26',
-    city: 'Berlin',
+    city: 'Tehran',
     bio: 'Casual runner, amateur photographer, and board games enthusiast.',
     interests: ['Running', 'Board Games', 'Photography', 'Hiking'],
     createdActivitiesCount: 1,
@@ -114,7 +114,7 @@ export const PRESET_USERS: User[] = [
     followers: ['usr_sasan_01', 'usr_marcus_03'],
     locationVisible: true,
     appearInDiscovery: true,
-    approximateLocation: { lat: 52.5240, lng: 13.4110, name: 'Prenzlauer Berg' },
+    approximateLocation: { lat: 35.6932, lng: 51.3950, name: 'Niavaran' },
     createdAt: '2026-07-01T12:00:00Z'
   },
   {
@@ -123,7 +123,7 @@ export const PRESET_USERS: User[] = [
     displayName: 'Marcus Vance',
     profilePhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
     ageRange: '28-34',
-    city: 'Berlin',
+    city: 'Tehran',
     bio: 'Pickup basketball fanatic, chess hobbyist, and guitarist.',
     interests: ['Basketball', 'Chess', 'Music', 'Cycling'],
     createdActivitiesCount: 3,
@@ -135,7 +135,7 @@ export const PRESET_USERS: User[] = [
     followers: ['usr_sasan_01', 'usr_elena_02'],
     locationVisible: true,
     appearInDiscovery: true,
-    approximateLocation: { lat: 52.5120, lng: 13.3980, name: 'Kreuzberg' },
+    approximateLocation: { lat: 35.6812, lng: 51.3820, name: 'Tajrish' },
     createdAt: '2026-06-20T08:30:00Z'
   },
   {
@@ -144,7 +144,7 @@ export const PRESET_USERS: User[] = [
     displayName: 'Aria Lin',
     profilePhoto: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
     ageRange: '24-29',
-    city: 'Berlin',
+    city: 'Tehran',
     bio: 'Software engineer building web apps. Love language exchanges & coffee study sessions.',
     interests: ['Programming', 'Language Exchange', 'Study', 'Art'],
     createdActivitiesCount: 2,
@@ -156,7 +156,7 @@ export const PRESET_USERS: User[] = [
     followers: ['usr_elena_02'],
     locationVisible: true,
     appearInDiscovery: true,
-    approximateLocation: { lat: 52.5310, lng: 13.3850, name: 'Mitte North' },
+    approximateLocation: { lat: 35.7002, lng: 51.3690, name: 'Valiasr North' },
     createdAt: '2026-05-10T14:15:00Z'
   }
 ];
@@ -245,7 +245,7 @@ export const INITIAL_ACTIVITIES: Activity[] = [
       id: 'usr_sasan_01',
       displayName: 'Sasan',
       profilePhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-      city: 'Berlin'
+      city: 'Tehran'
     },
     title: '🎮 Need 3 players for FIFA / FC25 tonight 🏆',
     category: 'Gaming',
@@ -253,8 +253,8 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Today',
     startTime: '20:30',
     durationHours: 2.5,
-    approximateLatitude: 52.5215,
-    approximateLongitude: 13.4075,
+    approximateLatitude: 35.6907,
+    approximateLongitude: 51.3915,
     locationName: 'Level Up Gaming Lounge & Cafe (Public Venue)',
     maxParticipants: 4,
     skillLevel: 'Any',
@@ -287,7 +287,7 @@ export const INITIAL_ACTIVITIES: Activity[] = [
       id: 'usr_marcus_03',
       displayName: 'Marcus Vance',
       profilePhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-      city: 'Berlin'
+      city: 'Tehran'
     },
     title: '⚽ Football game Saturday 18:00 (5v5 turf) 🔥',
     category: 'Football',
@@ -295,8 +295,8 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Saturday',
     startTime: '18:00',
     durationHours: 2,
-    approximateLatitude: 52.5140,
-    approximateLongitude: 13.4180,
+    approximateLatitude: 35.6832,
+    approximateLongitude: 51.4020,
     locationName: 'Volkspark Community Sports Arena (Pitch 2)',
     maxParticipants: 10,
     skillLevel: 'Intermediate',
@@ -355,7 +355,7 @@ export const INITIAL_ACTIVITIES: Activity[] = [
       id: 'usr_sasan_01',
       displayName: 'Sasan',
       profilePhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-      city: 'Berlin'
+      city: 'Tehran'
     },
     title: '🏋️‍♂️ Push day workout & bench spotter 💪',
     category: 'Gym',
@@ -363,8 +363,8 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Today',
     startTime: '19:00',
     durationHours: 1.5,
-    approximateLatitude: 52.5180,
-    approximateLongitude: 13.3910,
+    approximateLatitude: 35.6872,
+    approximateLongitude: 51.3750,
     locationName: 'FitHub City Central (Mitte Branch)',
     maxParticipants: 2,
     skillLevel: 'Any',
@@ -388,7 +388,7 @@ export const INITIAL_ACTIVITIES: Activity[] = [
       id: 'usr_marcus_03',
       displayName: 'Marcus Vance',
       profilePhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-      city: 'Berlin'
+      city: 'Tehran'
     },
     title: '🏀 Pickup basketball at 7 PM - 3v3 half-court ⛹️',
     category: 'Basketball',
@@ -396,8 +396,8 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Today',
     startTime: '19:00',
     durationHours: 2,
-    approximateLatitude: 52.5280,
-    approximateLongitude: 13.3980,
+    approximateLatitude: 35.6972,
+    approximateLongitude: 51.3820,
     locationName: 'Park am Nordbahnhof Basketball Courts',
     maxParticipants: 8,
     skillLevel: 'Intermediate',
@@ -435,7 +435,7 @@ export const INITIAL_ACTIVITIES: Activity[] = [
       id: 'usr_elena_02',
       displayName: 'Elena Rostova',
       profilePhoto: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
-      city: 'Berlin'
+      city: 'Tehran'
     },
     title: '♟️ Chess & iced coffee @ Garden Cafe ☕',
     category: 'Chess',
@@ -443,8 +443,8 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Tomorrow',
     startTime: '16:00',
     durationHours: 2.5,
-    approximateLatitude: 52.5315,
-    approximateLongitude: 13.4150,
+    approximateLatitude: 35.7007,
+    approximateLongitude: 51.3990,
     locationName: 'Kastanienallee Garden Cafe (Outdoor Tables)',
     maxParticipants: 6,
     skillLevel: 'Any',
@@ -482,7 +482,7 @@ export const INITIAL_ACTIVITIES: Activity[] = [
       id: 'usr_elena_02',
       displayName: 'Elena Rostova',
       profilePhoto: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
-      city: 'Berlin'
+      city: 'Tehran'
     },
     title: '🥾 Scenic lake trail hike & picnic 🌲',
     category: 'Hiking',
@@ -490,8 +490,8 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Sunday',
     startTime: '10:30',
     durationHours: 3.5,
-    approximateLatitude: 52.4950,
-    approximateLongitude: 13.3450,
+    approximateLatitude: 35.6642,
+    approximateLongitude: 51.3290,
     locationName: 'Grunewald Nature Reserve (Meeting at S-Bahn Station Entrance)',
     maxParticipants: 10,
     skillLevel: 'Beginner',
@@ -529,7 +529,7 @@ export const INITIAL_ACTIVITIES: Activity[] = [
       id: 'usr_aria_04',
       displayName: 'Aria Lin',
       profilePhoto: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
-      city: 'Berlin'
+      city: 'Tehran'
     },
     title: '💻 Weekend indie builders & hack co-working 🚀',
     category: 'Programming',
@@ -537,8 +537,8 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Tomorrow',
     startTime: '14:00',
     durationHours: 3,
-    approximateLatitude: 52.5250,
-    approximateLongitude: 13.3880,
+    approximateLatitude: 35.6942,
+    approximateLongitude: 51.3720,
     locationName: 'St. Oberholz Coworking Hub (Public Lounge)',
     maxParticipants: 8,
     skillLevel: 'Any',
@@ -569,7 +569,7 @@ export const INITIAL_ACTIVITIES: Activity[] = [
       id: 'usr_elena_02',
       displayName: 'Elena Rostova',
       profilePhoto: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
-      city: 'Berlin'
+      city: 'Tehran'
     },
     title: '📸 Golden hour & neon street photography walk ✨',
     category: 'Photography',
@@ -577,8 +577,8 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Saturday',
     startTime: '19:30',
     durationHours: 2,
-    approximateLatitude: 52.5090,
-    approximateLongitude: 13.3760,
+    approximateLatitude: 35.6782,
+    approximateLongitude: 51.3600,
     locationName: 'Potsdamer Platz (Sony Center Plaza Fountain)',
     maxParticipants: 6,
     skillLevel: 'Any',
@@ -602,7 +602,7 @@ export const INITIAL_ACTIVITIES: Activity[] = [
       id: 'usr_marcus_03',
       displayName: 'Marcus Vance',
       profilePhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-      city: 'Berlin'
+      city: 'Tehran'
     },
     title: '🎸 Acoustic guitar & indie jam session 🎶',
     category: 'Music',
@@ -610,8 +610,8 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Saturday',
     startTime: '16:00',
     durationHours: 2.5,
-    approximateLatitude: 52.5010,
-    approximateLongitude: 13.4350,
+    approximateLatitude: 35.6702,
+    approximateLongitude: 51.4190,
     locationName: 'Treptower Park (Rose Garden Gazebo)',
     maxParticipants: 5,
     skillLevel: 'Intermediate',
@@ -635,7 +635,7 @@ export const INITIAL_ACTIVITIES: Activity[] = [
       id: 'usr_aria_04',
       displayName: 'Aria Lin',
       profilePhoto: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
-      city: 'Berlin'
+      city: 'Tehran'
     },
     title: '🗣️ Language exchange: English / Spanish / German ☕',
     category: 'Language Exchange',
@@ -643,8 +643,8 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Today',
     startTime: '18:30',
     durationHours: 2,
-    approximateLatitude: 52.5230,
-    approximateLongitude: 13.4140,
+    approximateLatitude: 35.6922,
+    approximateLongitude: 51.3980,
     locationName: 'Alexanderplatz Cultural Community Center',
     maxParticipants: 12,
     skillLevel: 'Any',
@@ -682,7 +682,7 @@ export const INITIAL_ACTIVITIES: Activity[] = [
       id: 'usr_elena_02',
       displayName: 'Elena Rostova',
       profilePhoto: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
-      city: 'Berlin'
+      city: 'Tehran'
     },
     title: '🎲 Board game night: Catan & Codenames 🍕',
     category: 'Board Games',
@@ -690,8 +690,8 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Tomorrow',
     startTime: '19:00',
     durationHours: 3,
-    approximateLatitude: 52.5290,
-    approximateLongitude: 13.4020,
+    approximateLatitude: 35.6982,
+    approximateLongitude: 51.3860,
     locationName: 'The Dice & Roll Cafe (Reserved Table #4)',
     maxParticipants: 6,
     skillLevel: 'Any',
@@ -722,7 +722,7 @@ export const INITIAL_ACTIVITIES: Activity[] = [
       id: 'usr_p_01',
       displayName: 'Lukas Meyer',
       profilePhoto: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
-      city: 'Berlin'
+      city: 'Tehran'
     },
     title: '🎾 Tennis singles rally & match partner ⚡',
     category: 'Tennis',
@@ -730,8 +730,8 @@ export const INITIAL_ACTIVITIES: Activity[] = [
     date: 'Saturday',
     startTime: '11:00',
     durationHours: 1.5,
-    approximateLatitude: 52.5350,
-    approximateLongitude: 13.4250,
+    approximateLatitude: 35.7042,
+    approximateLongitude: 51.4090,
     locationName: 'Tiergarten Tennis Club (Court 3)',
     maxParticipants: 2,
     skillLevel: 'Intermediate',
@@ -752,32 +752,32 @@ export const INITIAL_ACTIVITIES: Activity[] = [
 
 export const INITIAL_COMMUNITIES: Community[] = [
   {
-    id: 'comm_fifa_berlin',
-    name: 'Berlin FC25 & FIFA Society',
+    id: 'comm_fifa_tehran',
+    name: 'Tehran FC25 & FIFA Society',
     category: 'Gaming',
     description: 'Local gamers organizing weekend tournaments, co-op leagues, and casual console sessions across cafes and lounges.',
     coverImage: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&auto=format&fit=crop&q=80',
     memberCount: 28,
     members: ['usr_sasan_01', 'usr_marcus_03'],
-    location: 'Berlin Mitte & Kreuzberg',
+    location: 'Valiasr & Tajrish',
     activityCount: 4,
     tags: ['FC25', 'PS5', 'Tournaments', 'Casual Gaming']
   },
   {
     id: 'comm_turf_football',
-    name: 'Berlin 5v5 & 7v7 Footballers',
+    name: 'Tehran 5v5 & 7v7 Footballers',
     category: 'Football',
     description: 'Friendly turf games twice a week. We split pitch booking costs equally and play fair, competitive football.',
     coverImage: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&auto=format&fit=crop&q=80',
     memberCount: 42,
     members: ['usr_sasan_01', 'usr_marcus_03'],
-    location: 'Volkspark Friedrichshain',
+    location: 'Park-e Shahr',
     activityCount: 6,
     tags: ['Turf', '5v5', 'Weekend Matches', 'All Levels']
   },
   {
     id: 'comm_indie_hackers',
-    name: 'Berlin Indie Coders & Hackers',
+    name: 'Tehran Indie Coders & Hackers',
     category: 'Programming',
     description: 'Engineers, designers, and founders meeting for co-working cafes, weekend hack sessions, and side-project feedback.',
     coverImage: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop&q=80',
@@ -789,25 +789,25 @@ export const INITIAL_COMMUNITIES: Community[] = [
   },
   {
     id: 'comm_chess_club',
-    name: 'Prenzlauer Berg Chess Circle',
+    name: 'Niavaran Chess Circle',
     category: 'Chess',
     description: 'Speed chess, classical analysis, and coffee games in public parks and quiet coffee shops.',
     coverImage: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=600&auto=format&fit=crop&q=80',
     memberCount: 19,
     members: ['usr_sasan_01', 'usr_marcus_03'],
-    location: 'Prenzlauer Berg & Mitte',
+    location: 'Niavaran & Mitte',
     activityCount: 2,
     tags: ['Blitz', 'Casual', 'Parks', 'Beginner Friendly']
   },
   {
     id: 'comm_sunrise_runners',
-    name: 'Tiergarten Sunrise Runners',
+    name: 'Mellat Park Sunrise Runners',
     category: 'Running',
     description: 'Early morning 5k and 10k paces through Tiergarten. Social coffee afterwards every Tuesday and Saturday.',
     coverImage: 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?w=600&auto=format&fit=crop&q=80',
     memberCount: 54,
     members: ['usr_elena_02'],
-    location: 'Tiergarten Central',
+    location: 'Mellat Park Central',
     activityCount: 5,
     tags: ['5k/10k', 'Morning Run', 'Social Coffee']
   },
