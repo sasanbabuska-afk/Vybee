@@ -256,10 +256,11 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
     map.doubleClickZoom.enable();
     map.scrollWheelZoom.enable();
 
-    // Dark Matter CartoDB Basemap
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      subdomains: 'abcd',
+    // OpenStreetMap standard tiles (free, no API key required).
+    // A CSS filter (see .leaflet-tile-pane in index.css) recolors these dark to match the app's theme.
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      subdomains: 'abc',
       maxZoom: 19
     }).addTo(map);
 
