@@ -1,0 +1,378 @@
+@import "tailwindcss";
+
+@layer base {
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #07080D;
+    color: #F1F5F9;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+}
+
+/* Custom Cyberpunk selection */
+::selection {
+  background-color: #FF5C00;
+  color: #000000;
+}
+
+/* Custom Cyberpunk scrollbars */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #07080D;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1F212E;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF5C00;
+  box-shadow: 0 0 8px rgba(255, 92, 0, 0.6);
+}
+
+/* Cyberpunk HUD styling utilities */
+.cyber-card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(20, 22, 32, 0.85) 0%, rgba(13, 14, 21, 0.95) 100%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-card:hover {
+  border-color: rgba(255, 92, 0, 0.35);
+  box-shadow: 0 8px 32px -8px rgba(255, 92, 0, 0.15), 0 0 0 1px rgba(255, 92, 0, 0.2);
+}
+
+/* Cyberpunk Activity Card Glow-Pulse & Flicker Animations */
+@keyframes cyberGlowPulse {
+  0%, 100% {
+    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+  50% {
+    box-shadow: 0 8px 30px -4px rgba(255, 92, 0, 0.16), 0 0 14px 1px rgba(255, 92, 0, 0.2), 0 0 0 1px rgba(255, 92, 0, 0.32);
+  }
+}
+
+@keyframes cyberHoverFlicker {
+  0% {
+    filter: brightness(1);
+    opacity: 0.96;
+  }
+  4% {
+    filter: brightness(1.25) drop-shadow(0 0 8px rgba(255, 92, 0, 0.45));
+    opacity: 1;
+  }
+  8% {
+    filter: brightness(0.97);
+    opacity: 0.94;
+  }
+  14% {
+    filter: brightness(1.3) drop-shadow(0 0 14px rgba(255, 92, 0, 0.6));
+    opacity: 1;
+  }
+  20% {
+    filter: brightness(1.05);
+  }
+  100% {
+    filter: brightness(1);
+    opacity: 1;
+  }
+}
+
+@keyframes cyberPeriodicFlicker {
+  0%, 86%, 100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  87% {
+    opacity: 0.93;
+    filter: brightness(1.18) drop-shadow(0 0 6px rgba(255, 92, 0, 0.35));
+  }
+  88.5% {
+    opacity: 1;
+    filter: brightness(0.98);
+  }
+  90% {
+    opacity: 0.95;
+    filter: brightness(1.22) drop-shadow(0 0 10px rgba(255, 92, 0, 0.5));
+  }
+  92% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+@keyframes cyberScanSweep {
+  0% {
+    top: -20%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.35;
+  }
+  80% {
+    opacity: 0.35;
+  }
+  100% {
+    top: 120%;
+    opacity: 0;
+  }
+}
+
+.cyber-card-pulse {
+  animation: cyberGlowPulse 6s ease-in-out infinite, cyberPeriodicFlicker 9s ease-in-out infinite;
+  will-change: transform, box-shadow, filter;
+}
+
+.cyber-card-pulse:hover {
+  animation: cyberHoverFlicker 0.35s ease-out 1, cyberGlowPulse 3.5s ease-in-out infinite;
+  border-color: rgba(255, 92, 0, 0.45) !important;
+  box-shadow: 0 10px 35px -5px rgba(255, 92, 0, 0.22), 0 0 18px 2px rgba(255, 92, 0, 0.25), 0 0 0 1px rgba(255, 92, 0, 0.4) !important;
+}
+
+.cyber-card-pulse:hover .cyber-scanline {
+  animation: cyberScanSweep 1.2s ease-in-out infinite;
+}
+
+/* Cyber corner bracket accents */
+.cyber-bracket {
+  position: relative;
+}
+
+.cyber-bracket::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 6px;
+  height: 6px;
+  border-top: 2px solid #FF5C00;
+  border-left: 2px solid #FF5C00;
+  pointer-events: none;
+}
+
+.cyber-bracket::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 6px;
+  height: 6px;
+  border-bottom: 2px solid #FF5C00;
+  border-right: 2px solid #FF5C00;
+  pointer-events: none;
+}
+
+/* Custom Leaflet Map styling in Cyber Mode */
+.leaflet-container {
+  background-color: #0B0C13 !important;
+  font-family: inherit !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1;
+}
+
+.leaflet-tile-pane {
+  opacity: 0.92;
+  filter: contrast(1.05) brightness(0.95);
+}
+
+.leaflet-popup-content-wrapper {
+  background: #11121A !important;
+  color: #f1f5f9 !important;
+  border: 1px solid rgba(255, 92, 0, 0.35) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.9), 0 0 15px rgba(255, 92, 0, 0.2) !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: inherit !important;
+}
+
+.leaflet-popup-tip {
+  background: #11121A !important;
+  border: 1px solid rgba(255, 92, 0, 0.35) !important;
+}
+
+.leaflet-control-zoom {
+  border: none !important;
+  margin-top: 16px !important;
+  margin-right: 16px !important;
+}
+
+.leaflet-control-zoom a {
+  background-color: #151622 !important;
+  color: #f1f5f9 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 8px !important;
+  margin-bottom: 4px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: #1E2030 !important;
+  color: #FF5C00 !important;
+  border-color: rgba(255, 92, 0, 0.6) !important;
+  box-shadow: 0 0 10px rgba(255, 92, 0, 0.3) !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(7, 8, 13, 0.9) !important;
+  color: #64748b !important;
+  font-size: 10px !important;
+  border-radius: 4px;
+  padding: 2px 6px !important;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.leaflet-control-attribution a {
+  color: #94a3b8 !important;
+}
+
+.activity-custom-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.user-loc-icon, .picker-pin-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+.leaflet-tooltip.activity-map-tooltip {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+  display: none !important;
+}
+
+/* Leaflet Map Container & Touch/Pointer Interaction Handling */
+#interactive-map-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  position: relative !important;
+  touch-action: pan-x pan-y !important;
+  pointer-events: auto !important;
+}
+
+#leaflet-map-element,
+.leaflet-container {
+  cursor: grab !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  touch-action: pan-x pan-y !important;
+  -ms-touch-action: pan-x pan-y !important;
+  outline: none !important;
+  pointer-events: auto !important;
+  position: absolute !important;
+  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  background-color: #0A0A0B !important;
+}
+
+.leaflet-touch.leaflet-container {
+  touch-action: pan-x pan-y !important;
+}
+
+.leaflet-container:active,
+.leaflet-grab:active,
+.leaflet-dragging .leaflet-grab,
+.leaflet-dragging .leaflet-container,
+.leaflet-container.leaflet-drag-target {
+  cursor: grabbing !important;
+}
+
+.leaflet-pane,
+.leaflet-map-pane,
+.leaflet-tile-pane,
+.leaflet-objects-pane,
+.leaflet-overlay-pane {
+  pointer-events: auto !important;
+}
+
+.leaflet-tile {
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+  pointer-events: none !important;
+}
+
+.leaflet-marker-pane,
+.leaflet-popup-pane,
+.leaflet-tooltip-pane,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+  pointer-events: auto !important;
+}
+
+/* Custom scrollbar hiding utilities */
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.no-scrollbar,
+.scrollbar-none {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+.smooth-horizontal-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  touch-action: pan-x pan-y;
+  overscroll-behavior-x: contain;
+}
+
+/* Accessibility: prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

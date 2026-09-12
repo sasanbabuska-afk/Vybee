@@ -1,0 +1,6 @@
+{
+  "name": "VYBE",
+  "description": "Find people. Find activities. Do something. A mobile-first social activity discovery platform to discover and join activities happening around you on an interactive map.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
