@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { ActivityCategory, ActivityVisibility, SkillLevel, User } from '../types';
 import { CATEGORIES, getCategoryMeta } from '../data/categories';
 import { InteractiveMap } from './InteractiveMap';
+import { fileToCompressedDataUrl } from '../utils/imageUpload';
 import {
   X,
   Plus,
@@ -13,7 +14,8 @@ import {
   Shield,
   Sparkles,
   ChevronRight,
-  Lightbulb
+  Lightbulb,
+  ImagePlus
 } from 'lucide-react';
 
 interface CreateActivityModalProps {
@@ -32,6 +34,7 @@ interface CreateActivityModalProps {
     maxParticipants: number;
     skillLevel: SkillLevel;
     visibility: ActivityVisibility;
+    coverPhoto?: string;
   }) => void;
   initialLat?: number;
   initialLng?: number;
@@ -64,6 +67,9 @@ export const CreateActivityModal: React.FC<CreateActivityModalProps> = ({
   const [visibility, setVisibility] = useState<ActivityVisibility>('Public');
   const [showMapPicker, setShowMapPicker] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [coverPhoto, setCoverPhoto] = useState<string | undefined>(undefined);
+  const [isPhotoUploading, setIsPhotoUploading] = useState(false);
+  const photoInputRef = useRef<HTMLInputElement>(null);
 
   const meta = getCategoryMeta(selectedCategory);
 
@@ -103,8 +109,24 @@ export const CreateActivityModal: React.FC<CreateActivityModalProps> = ({
       locationName: locationName.trim(),
       maxParticipants,
       skillLevel,
-      visibility
+      visibility,
+      coverPhoto
     });
+  };
+
+  const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      setIsPhotoUploading(true);
+      const dataUrl = await fileToCompressedDataUrl(file, 900, 0.75);
+      setCoverPhoto(dataUrl);
+    } catch {
+      setError('Could not use that photo — try a different one.');
+    } finally {
+      setIsPhotoUploading(false);
+      if (photoInputRef.current) photoInputRef.current.value = '';
+    }
   };
 
   return (
@@ -241,6 +263,44 @@ export const CreateActivityModal: React.FC<CreateActivityModalProps> = ({
               placeholder="What are the plans? Who should join? What should participants bring?"
               className="w-full px-4 py-3 rounded-2xl bg-[#1A1A1F] border border-white/10 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-[#FF5C00]/50 transition leading-relaxed"
             />
+          </div>
+
+          {/* Cover Photo (optional) */}
+          <div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+              Cover Photo <span className="text-slate-500 normal-case font-medium">(optional)</span>
+            </label>
+            <input
+              ref={photoInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handlePhotoChange}
+            />
+            {coverPhoto ? (
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 h-40">
+                <img src={coverPhoto} alt="Cover" className="w-full h-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => setCoverPhoto(undefined)}
+                  className="absolute top-2 right-2 p-1.5 rounded-full bg-black/70 text-white hover:bg-black cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => photoInputRef.current?.click()}
+                disabled={isPhotoUploading}
+                className="w-full h-24 rounded-2xl bg-[#1A1A1F] border border-dashed border-white/15 hover:border-[#FF5C00]/50 text-slate-400 hover:text-slate-200 transition flex flex-col items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <ImagePlus className="w-5 h-5" />
+                <span className="text-xs font-semibold">
+                  {isPhotoUploading ? 'Adding photo...' : 'Add a photo to help people picture it'}
+                </span>
+              </button>
+            )}
           </div>
 
           {/* 4. Date, Time & Duration */}

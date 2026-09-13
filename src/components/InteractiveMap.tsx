@@ -468,7 +468,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
         // Render Cluster Badge: "[ 8 ] 8 VYBES"
         const count = cluster.activities.length;
         const clusterHtml = `
-          <div class="group relative flex flex-col items-center justify-center cursor-pointer transition-transform duration-150 active:scale-95">
+          <div class="vybe-marker-pop group relative flex flex-col items-center justify-center cursor-pointer transition-transform duration-150 active:scale-95">
             <div class="relative flex items-center justify-center w-11 h-11 rounded-2xl bg-[#14151D]/95 border-2 border-[#FF5C00] shadow-[0_0_20px_rgba(255,92,0,0.6)] group-hover:shadow-[0_0_25px_rgba(255,92,0,0.85)] group-hover:scale-105 transition-all backdrop-blur-md">
               <span class="text-xs font-bold text-white leading-none">${count}</span>
               <span class="absolute -bottom-1 text-[8px] font-black text-black bg-[#FF5C00] px-1 py-0.2 rounded-full uppercase tracking-wider">
@@ -516,7 +516,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
         const spotsLeft = Math.max(0, activity.maxParticipants - activity.participants.length);
 
         const markerHtml = `
-          <div id="map-pin-${activity.id}" class="group relative flex flex-col items-center justify-center transform transition-transform duration-200 cursor-pointer ${
+          <div id="map-pin-${activity.id}" class="vybe-marker-pop group relative flex flex-col items-center justify-center transform transition-transform duration-200 cursor-pointer ${
             isSelected ? 'scale-125 z-50' : 'hover:scale-110'
           }">
             <div class="relative flex items-center justify-center w-10 h-10 rounded-2xl bg-[#14151D]/95 border ${
@@ -524,6 +524,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
                 ? 'border-[#FF5C00] ring-2 ring-[#FF5C00] shadow-[0_0_24px_rgba(255,92,0,0.85)]'
                 : 'border-white/15 hover:border-[#FF5C00] shadow-xl hover:shadow-[0_0_16px_rgba(255,92,0,0.35)]'
             } backdrop-blur-md transition-all">
+              ${isNow ? '<span class="vybe-pulse-ring"></span>' : ''}
               <span class="text-base leading-none">${meta.emoji}</span>
               ${
                 isNow

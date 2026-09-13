@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Activity, ChatMessage, User, PenaltyReason } from '../types';
+import { Activity, ChatMessage, User, PenaltyReason, RecapPhoto } from '../types';
 import { getCategoryMeta } from '../data/categories';
 import { calculateDistanceKm, formatApproximateDistance, novaStore } from '../services/store';
 import { supabaseService } from '../services/supabaseService';
 import { isSupabaseConfigured } from '../lib/supabase';
 import { EmojiQuickPicker } from './EmojiQuickPicker';
+import { fileToCompressedDataUrl } from '../utils/imageUpload';
 import {
   calculateActivityCountdown,
   getGoogleCalendarUrl,
@@ -95,6 +96,9 @@ export const ActivityDetailModal: React.FC<ActivityDetailModalProps> = ({
   const [showSafetyTip, setShowSafetyTip] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [tick, setTick] = useState(0);
+  const [recapPhotos, setRecapPhotos] = useState<RecapPhoto[]>(activity.recapPhotos || []);
+  const [isRecapUploading, setIsRecapUploading] = useState(false);
+  const recapInputRef = useRef<HTMLInputElement>(null);
   const [reminderSavedNotice, setReminderSavedNotice] = useState<string | null>(null);
   const [showChatEmojiPicker, setShowChatEmojiPicker] = useState(false);
   const [reactions, setReactions] = useState<Record<string, number>>({});
@@ -211,6 +215,26 @@ export const ActivityDetailModal: React.FC<ActivityDetailModalProps> = ({
   const isFull = activity.participants.length >= activity.maxParticipants;
   const spotsLeft = Math.max(0, activity.maxParticipants - activity.participants.length);
   const countdown = calculateActivityCountdown(activity);
+  const hasActivityStarted = countdown.isOngoing || countdown.isPast;
+  const myRecapPhoto = recapPhotos.find(p => p.userId === currentUser.id);
+
+  const handleRecapPhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      setIsRecapUploading(true);
+      const dataUrl = await fileToCompressedDataUrl(file, 900, 0.75);
+      const res = novaStore.addRecapPhoto(activity.id, dataUrl);
+      if (res.success) {
+        setRecapPhotos(novaStore.getActivityById(activity.id)?.recapPhotos || []);
+      }
+    } catch {
+      // Keep it simple — a failed photo pick just quietly does nothing
+    } finally {
+      setIsRecapUploading(false);
+      if (recapInputRef.current) recapInputRef.current.value = '';
+    }
+  };
 
   const savedReminders = getSavedReminders();
   const currentReminder = savedReminders[activity.id];
@@ -767,6 +791,56 @@ export const ActivityDetailModal: React.FC<ActivityDetailModalProps> = ({
                 )}
               </div>
             </div>
+
+            {/* Recap Photo Gallery — visible once the activity has started */}
+            {hasActivityStarted && (
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                    <Camera className="w-3.5 h-3.5" />
+                    <span>Recap Photos ({recapPhotos.length})</span>
+                  </h4>
+                </div>
+
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                  {recapPhotos.map(photo => (
+                    <div key={photo.id} className="relative aspect-square rounded-xl overflow-hidden border border-white/10">
+                      <img src={photo.photoUrl} alt={photo.displayName} className="w-full h-full object-cover" />
+                      <span className="absolute bottom-1 left-1 right-1 text-[9px] font-bold text-white truncate bg-black/50 rounded px-1">
+                        {photo.displayName}
+                      </span>
+                    </div>
+                  ))}
+
+                  {isJoined && !myRecapPhoto && (
+                    <>
+                      <input
+                        ref={recapInputRef}
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleRecapPhotoChange}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => recapInputRef.current?.click()}
+                        disabled={isRecapUploading}
+                        className="aspect-square rounded-xl border border-dashed border-white/15 hover:border-[#FF5C00]/50 text-slate-400 hover:text-slate-200 transition flex flex-col items-center justify-center gap-1 cursor-pointer"
+                      >
+                        <Camera className="w-4 h-4" />
+                        <span className="text-[9px] font-bold text-center px-1">
+                          {isRecapUploading ? 'Adding...' : 'Add yours'}
+                        </span>
+                      </button>
+                    </>
+                  )}
+                </div>
+
+                {recapPhotos.length === 0 && !isJoined && (
+                  <p className="text-xs text-slate-500">No recap photos yet.</p>
+                )}
+              </div>
+            )}
 
             {/* Participants List with Reliability Scores & Host Penalty Options */}
             <div>

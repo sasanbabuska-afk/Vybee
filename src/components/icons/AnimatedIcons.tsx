@@ -626,3 +626,43 @@ export const AnimatedLayers: React.FC<AnimatedIconProps> = ({
     </motion.svg>
   );
 };
+
+// 16. Animated User (gentle pop + glow on active, for Profile nav)
+export const AnimatedUser: React.FC<AnimatedIconProps> = ({
+  className = '',
+  size = 20,
+  isHovered
+}) => {
+  const [internalHover, setInternalHover] = useState(false);
+  const active = isHovered ?? internalHover;
+
+  return (
+    <motion.svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      onMouseEnter={() => setInternalHover(true)}
+      onMouseLeave={() => setInternalHover(false)}
+    >
+      <motion.circle
+        cx="12"
+        cy="8"
+        r="4"
+        animate={{ scale: active ? [1, 1.18, 1] : 1 }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
+        style={{ transformOrigin: '12px 8px' }}
+      />
+      <motion.path
+        d="M4 21c0-4 4-6 8-6s8 2 8 6"
+        animate={{ y: active ? [0, -1, 0] : 0 }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
+      />
+    </motion.svg>
+  );
+};

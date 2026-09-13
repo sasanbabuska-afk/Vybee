@@ -9,9 +9,12 @@ import {
   PenaltyRecord,
   PenaltyReason,
   AppNotification,
-  NotificationType
+  NotificationType,
+  Story,
+  RecapPhoto
 } from '../types';
 
+const STORIES_KEY = 'nova_stories_v1';
 const ACTIVITIES_KEY = 'nova_activities_v1';
 const USER_KEY = 'nova_current_user_v1';
 const REPORTS_KEY = 'nova_reports_v1';
@@ -854,6 +857,7 @@ class NovaStore {
   private communities: Community[] = [];
   private reports: Report[] = [];
   private blocks: Block[] = [];
+  private stories: Story[] = [];
   private chatMessages: Record<string, ChatMessage[]> = INITIAL_CHAT_MESSAGES;
   private chatLastRead: Record<string, Record<string, string>> = {}; // activityId -> userId -> ISO string
   private reactions: ActivityReactionsData = INITIAL_ACTIVITY_REACTIONS;
@@ -947,6 +951,11 @@ class NovaStore {
       if (savedBlocks) {
         this.blocks = JSON.parse(savedBlocks);
       }
+
+      const savedStories = localStorage.getItem(STORIES_KEY);
+      if (savedStories) {
+        this.stories = JSON.parse(savedStories);
+      }
     } catch (e) {
       console.warn('LocalStorage error in NovaStore:', e);
       this.currentUser = INITIAL_USER;
@@ -1033,6 +1042,15 @@ class NovaStore {
   private saveBlocks() {
     try {
       localStorage.setItem(BLOCKS_KEY, JSON.stringify(this.blocks));
+    } catch (e) {
+      console.error(e);
+    }
+    this.notify();
+  }
+
+  private saveStories() {
+    try {
+      localStorage.setItem(STORIES_KEY, JSON.stringify(this.stories));
     } catch (e) {
       console.error(e);
     }
@@ -1359,6 +1377,51 @@ class NovaStore {
     );
 
     return this.activities.filter(act => !blockedUserIds.has(act.creatorId));
+  }
+
+  /** Stories visible right now: only ones posted in the last 24 hours, newest first */
+  public getStories(): Story[] {
+    const cutoff = Date.now() - 24 * 60 * 60 * 1000;
+    return this.stories
+      .filter(s => new Date(s.createdAt).getTime() > cutoff)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  public addStory(imageUrl: string): Story {
+    const newStory: Story = {
+      id: `story_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      userId: this.currentUser.id,
+      displayName: this.currentUser.displayName,
+      profilePhoto: this.currentUser.profilePhoto,
+      imageUrl,
+      createdAt: new Date().toISOString()
+    };
+    this.stories = [newStory, ...this.stories];
+    this.saveStories();
+    return newStory;
+  }
+
+  /** Adds a recap photo to an activity. One photo per attendee, and only once the activity has started. */
+  public addRecapPhoto(activityId: string, photoUrl: string): { success: boolean; message: string } {
+    const activity = this.activities.find(a => a.id === activityId);
+    if (!activity) return { success: false, message: 'Activity not found' };
+
+    const isAttendee = activity.participants.some(p => p.userId === this.currentUser.id);
+    if (!isAttendee) return { success: false, message: 'Only attendees can add recap photos.' };
+
+    const existing = (activity.recapPhotos || []).find(p => p.userId === this.currentUser.id);
+    if (existing) return { success: false, message: 'You already added a recap photo.' };
+
+    const photo: RecapPhoto = {
+      id: `recap_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      userId: this.currentUser.id,
+      displayName: this.currentUser.displayName,
+      photoUrl,
+      createdAt: new Date().toISOString()
+    };
+    activity.recapPhotos = [...(activity.recapPhotos || []), photo];
+    this.saveActivities();
+    return { success: true, message: 'Photo added to the recap gallery!' };
   }
 
   public getActivityById(id: string): Activity | undefined {

@@ -80,6 +80,20 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
           : 'border-white/8 hover:border-white/20 hover:shadow-lg hover:shadow-black/40'
       }`}
     >
+      {/* Cover Photo (optional) */}
+      {activity.coverPhoto && (
+        <div
+          onClick={() => onSelect(activity)}
+          className="h-36 w-full overflow-hidden cursor-pointer"
+        >
+          <img
+            src={activity.coverPhoto}
+            alt={activity.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+      )}
+
       {/* 1. WHAT: Top Section (Category, Status & Title) */}
       <div className="p-5 pb-4 space-y-3">
         {/* Category & Status Pill Bar */}

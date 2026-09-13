@@ -8,7 +8,8 @@ import {
   SkillLevel,
   User,
   ActivityVisibility,
-  AppNotification
+  AppNotification,
+  Story
 } from './types';
 import {
   novaStore,
@@ -38,6 +39,9 @@ import { SquadChatModal } from './components/SquadChatModal';
 import { AuthModal } from './components/AuthModal';
 import { ModalPortal } from './components/ModalPortal';
 import { SupabaseStatusBanner } from './components/SupabaseStatusBanner';
+import { ConfettiBurst } from './components/widgets/ConfettiBurst';
+import { StoriesBar } from './components/StoriesBar';
+import { StoryViewerModal } from './components/StoryViewerModal';
 import { calculateUserSchedule } from './utils/schedule';
 import { authService } from './services/authService';
 import { supabaseService } from './services/supabaseService';
@@ -63,6 +67,8 @@ export default function App() {
   const [activities, setActivities] = useState<Activity[]>(novaStore.getActivities());
   const [communities, setCommunities] = useState<Community[]>(novaStore.getCommunities());
   const [blockedUserIds, setBlockedUserIds] = useState<string[]>(novaStore.getBlockedUserIds());
+  const [stories, setStories] = useState<Story[]>(novaStore.getStories());
+  const [viewingStoryUserId, setViewingStoryUserId] = useState<string | null>(null);
 
   // Supabase Auth State
   const [authEmail, setAuthEmail] = useState<string | null>(null);
@@ -106,6 +112,10 @@ export default function App() {
   // Toast notifications
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
+  // Personality touch: confetti burst (fires when this changes to a new value)
+  const [confettiTriggerKey, setConfettiTriggerKey] = useState(0);
+  const fireConfetti = () => setConfettiTriggerKey(Date.now());
+
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
@@ -120,6 +130,7 @@ export default function App() {
       setActivities(novaStore.getActivities());
       setCommunities(novaStore.getCommunities());
       setBlockedUserIds(novaStore.getBlockedUserIds());
+      setStories(novaStore.getStories());
       const pendingAlert = novaStore.getActivePenaltyAlert();
       if (pendingAlert) {
         setActivePenaltyNotification(pendingAlert);
@@ -343,10 +354,17 @@ export default function App() {
       const updatedActs = await supabaseService.fetchActivities();
       if (updatedActs.length > 0) setActivities(updatedActs);
       showToast('Successfully joined squad!');
+      fireConfetti();
     } else {
       const res = novaStore.joinActivity(activityId);
       showToast(res.message);
+      if (res.success) fireConfetti();
     }
+  };
+
+  const handleAddStory = (imageUrl: string) => {
+    novaStore.addStory(imageUrl);
+    showToast('Your Vybe is live for 24 hours!');
   };
 
   const handleLeaveActivity = async (activityId: string, applyPenalty?: boolean) => {
@@ -616,6 +634,16 @@ export default function App() {
               transition={{ duration: 0.2 }}
               className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6 w-full pb-28"
             >
+              {/* 24-hour Stories */}
+              <div className="-mx-4 sm:-mx-6 -mt-2 border-b border-white/8">
+                <StoriesBar
+                  stories={stories}
+                  currentUser={currentUser}
+                  onAddStory={handleAddStory}
+                  onOpenStory={userId => setViewingStoryUserId(userId)}
+                />
+              </div>
+
               {/* Joined Activities Live Reminder & Today Schedule Banner */}
               {userSchedule.allJoinedUpcoming.length > 0 && (
                 <JoinedActivitiesReminderBanner
@@ -1094,6 +1122,21 @@ export default function App() {
               }
               showToast('Authentication confirmed!');
             }}
+          />
+        </ModalPortal>
+      )}
+
+      {/* Personality touch: confetti burst on join */}
+      <ConfettiBurst triggerKey={confettiTriggerKey} />
+
+      {/* 24-hour Story Viewer */}
+      {viewingStoryUserId && (
+        <ModalPortal>
+          <StoryViewerModal
+            stories={stories
+              .filter(s => s.userId === viewingStoryUserId)
+              .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())}
+            onClose={() => setViewingStoryUserId(null)}
           />
         </ModalPortal>
       )}

@@ -1,11 +1,12 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Map as MapIcon, User as UserIcon } from 'lucide-react';
 import { User } from '../types';
 import {
   AnimatedCompass,
   AnimatedPlus,
-  AnimatedCalendar
+  AnimatedCalendar,
+  AnimatedMapPin,
+  AnimatedUser
 } from './icons/AnimatedIcons';
 
 interface BottomNavProps {
@@ -53,7 +54,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
             activeView === 'map' ? 'text-[#FF5C00]' : 'text-slate-400 hover:text-white'
           }`}
         >
-          <MapIcon className="w-5 h-5" />
+          <AnimatedMapPin size={20} isHovered={activeView === 'map'} />
           <span className="text-[10px] font-bold tracking-tight">Live Map</span>
         </motion.button>
 
@@ -105,7 +106,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
               : 'text-slate-400 hover:text-white'
           }`}
         >
-          <UserIcon className="w-5 h-5" />
+          <AnimatedUser size={20} isHovered={activeView === 'profile'} />
           <span className="text-[10px] font-bold tracking-tight">Profile</span>
         </motion.button>
       </div>

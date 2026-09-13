@@ -154,6 +154,27 @@ export interface Activity {
   participants: Participant[];
   createdAt: string;
   tags?: string[];
+  /** Optional cover photo set by the host when creating the activity */
+  coverPhoto?: string;
+  /** Photos attendees add after the activity has happened */
+  recapPhotos?: RecapPhoto[];
+}
+
+export interface RecapPhoto {
+  id: string;
+  userId: string;
+  displayName: string;
+  photoUrl: string;
+  createdAt: string;
+}
+
+export interface Story {
+  id: string;
+  userId: string;
+  displayName: string;
+  profilePhoto: string;
+  imageUrl: string;
+  createdAt: string; // ISO string; story expires 24h after this
 }
 
 export interface Report {

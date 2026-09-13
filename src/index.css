@@ -382,3 +382,59 @@
 #leaflet-map-element .leaflet-tile-pane {
   filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(0.9) saturate(0.6);
 }
+
+/* ============================================================
+   GLOBAL ICON POLISH
+   Applies to every lucide-react icon across the whole app at once
+   (every icon gets the base "lucide" class automatically).
+   To revert: delete this block only.
+   ============================================================ */
+.lucide {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 2px currentColor);
+  transition: filter 0.2s ease, transform 0.15s ease;
+}
+button:hover .lucide,
+[role='button']:hover .lucide {
+  transform: scale(1.08);
+}
+
+/* ============================================================
+   PERSONALITY: on-brand skeleton/shimmer loading screens
+   ============================================================ */
+@keyframes vybeShimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.vybe-skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,92,0,0.12) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 800px 100%;
+  animation: vybeShimmer 1.6s ease-in-out infinite;
+  border-radius: 12px;
+}
+
+/* ============================================================
+   LIVING MAP: pulse ring for "happening now" pins + pop-in
+   ============================================================ */
+@keyframes vybePulseRing {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  70% { transform: scale(2.1); opacity: 0; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+.vybe-pulse-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: rgba(255, 92, 0, 0.55);
+  animation: vybePulseRing 1.8s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+  pointer-events: none;
+}
+@keyframes vybeMarkerPopIn {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.vybe-marker-pop {
+  animation: vybeMarkerPopIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
